@@ -1,0 +1,48 @@
+.container-fluid{
+    padding-top: 3%;
+}
+
+#profile-div{
+    border: 2px outset orange;
+    border-radius: 10px;
+}
+
+.list{
+    font-size: x-large;
+    font-weight: bold;
+    padding: 2%;
+}
+
+.list:hover{
+    color: orange;
+    transform: scale(1.02);
+}
+
+#telefono{
+    border-style: none;
+    color: black;
+}
+
+#telefono::placeholder{
+    color:rgb(117, 110, 110);
+}
+
+#telefono:hover::placeholder{
+    color: orange;
+}
+
+#button-row{
+    margin-top: 3%;
+    text-align: center;
+}
+
+.btn-light{
+    box-shadow: 8px 8px 8px rgba(190, 178, 154, 0.966);
+}
+
+.btn-light:hover{
+    background-color: rgba(255, 175, 25, 0.966);
+    color: black;
+    box-shadow: 8px 8px 8px rgba(255, 206, 101, 0.74);
+    transform: scale(1.2);
+}

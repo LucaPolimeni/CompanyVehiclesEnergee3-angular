@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="row">
+            <div class="col-md-1 myColumn"></div>
+            <div class="col-md-4 myColumn">
+                <label class="active" for="licensePlate">Targa</label>
+                <input class= "form-control" type="text" ngModel name="licensePlate" placeholder="ex. AB123CD" pattern="[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}" #licensePlate="ngModel">
+                <span class="help-block" *ngIf="!licensePlate.valid">Targa non valida</span>
+            </div>
+            <div class="col-md-4 myColumn">
+                <div class="col-md-6 form-group">
+                    <label class="active" for="startDate">Data inizio</label>
+                    <input class= "form-control" type="date" ngModel name="startDate">
+                </div>
+                <div class="col-md-6 form-group myColumn">
+                    <label class="active" for="endDate">Data fine</label>
+                    <input class= "form-control" type="date" ngModel name="endDate">
+                </div>
+            </div>
+            <div class="col-md-2 myColumn">
+                <button type="submit" class="btn btn-light" [disabled]="!licensePlate.valid">Filtra</button>
+            </div>
+        </div>
+    </form>
+    
+    
+
+</div>
+<div class="container-fluid">
+
+    <div class="row">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+              <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+              <td mat-cell *matCellDef="let booking">{{ booking[column] }}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let bookingRow; columns: displayedColumns"></tr>
+          </table>
+    </div>
+</div>

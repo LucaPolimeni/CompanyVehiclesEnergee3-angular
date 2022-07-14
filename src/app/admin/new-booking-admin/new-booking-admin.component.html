@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="col-md-2 myColumn"></div>
+            <div class="col-md-3 myColumn">
+                <label class="active" for="email">email Dipendente*</label>
+                <input class= "form-control" 
+                    type="email" 
+                    ngModel name="email" 
+                    placeholder="@energee3.com" 
+                    pattern="[a-zA-Z]*[.][a-zA-Z0-9]*@(energee3.com|ENERGEE3.COM)"
+                    required 
+                    email 
+                    #email="ngModel">
+                <span class="help-block" *ngIf="!email.valid && email.touched">Inserisci una mail valida</span>
+            </div>
+            <div class="col-md-3 myColumn">
+                <div class="col-md-6 form-group myColumn ">
+                    <label class="active" for="startDate">Data inizio*</label>
+                    <input class= "form-control" type="date" ngModel name="startDate" required #startDate="ngModel">
+                    <span class="help-block" *ngIf="!startDate.valid && startDate.touched">Inserisci una data</span>
+                </div>
+                <div class="col-md-6 form-group myColumn">
+                    <label class="active" for="endDate">Data fine*</label>
+                    <input class= "form-control" type="date" ngModel name="endDate" required #endDate="ngModel">
+                    <span class="help-block" *ngIf="!endDate.valid && endDate.touched">Inserisci una data</span>
+                </div>
+            </div>
+            <div class="col-md-3 myColumn">
+                <button 
+                    type="submit" 
+                    class="btn btn-light"
+                    [disabled]="!f.valid">Cerca</button>
+            </div>
+            <div class="col-md-1"></div>
+        </form>
+    </div>
+    <div class="row" *ngIf="submitted">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <hr>
+            <p>Auto disponibili per il dipendente <b>{{ cognome }} {{ nome }}</b> nel periodo <b>{{ dataInizio }}</b> - <b>{{ dataFine }}</b></p>
+        </div>
+    </div>
+</div>
+

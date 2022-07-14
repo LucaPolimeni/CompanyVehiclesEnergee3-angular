@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">   
+        <div class="row">
+            <div class="col-md-3"></div>
+
+            <div class="col-md-6" id="profile-div">
+                <div class="row list">
+                    <div class="col-md-6">Id dipendente:</div>
+                    <div class="col-md-6">123</div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Nome:</div>
+                    <div class="col-md-6">Mario</div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Cognome:</div>
+                    <div class="col-md-6">Rossi</div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Sesso:</div>
+                    <div class="col-md-6">M</div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Telefono:</div>
+                    <div class="col-md-6">
+                        <input type="text" 
+                                id="telefono" 
+                                ngModel 
+                                name="telefono" 
+                                placeholder="3427898412"
+                                pattern="[0-9]{10}" 
+                                required
+                                #phone="ngModel">
+                    </div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Email:</div>
+                    <div class="col-md-6">mario.rossi@energee3.com</div>
+                </div>
+                <div class="row list">
+                    <div class="col-md-6">Codice Fiscale:</div>
+                    <div class="col-md-6">RSSMRI78X89P</div>
+                </div>
+            </div>
+        
+            <div class="col-md-3"></div>
+
+        </div>
+        <div class="row" id="button-row">
+            <button type="submit" class="btn btn-light" [disabled]="!f.valid">Aggiorna</button>
+        </div>
+        <div class="row" *ngIf="submitted" style="padding:2%;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <p>Il numero è stato aggiornato in <b>{{ telefono }}</b></p>
+            </div>
+        </div>
+    </form>
+</div>

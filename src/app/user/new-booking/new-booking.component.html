@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 myColumn"></div>
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="col-md-4 myColumn">
+                <div class="col-md-6 form-group">
+                    <label class="active" for="startDate">Data inizio</label>
+                    <input class= "form-control" type="date" ngModel name="startDate" required #startDate="ngModel">
+                    <span class="help-block" *ngIf="!startDate.valid && startDate.touched">Inserisci una data</span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="active" for="endDate">Data fine</label>
+                    <input class= "form-control" type="date" ngModel name="endDate" required #endDate="ngModel">
+                    <span class="help-block" *ngIf="!endDate.valid && endDate.touched">Inserisci una data</span>
+                </div>
+            </div>
+            <div class="col-md-2 myColumn">
+                <button type="submit" class="btn btn-light" [disabled]="!f.valid">Cerca</button>
+            </div>
+        </form>
+            <div class="col-md-3 myColumn"></div>
+    </div>
+    <div class="row" *ngIf="submitted">
+        <div class="col-md-2 myColumn"></div>
+        <div class="col-md-6 myColumn">
+            <hr>
+            <p>Auto disponibili per il periodo <b>{{ dataInizio }}</b> - <b>{{ dataFine }}</b></p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+.container-fluid{
+    text-align: center;
+}
+
+.row{
+    padding-top: 5%;
+}
+
+.logo{
+    padding-bottom: 5%;
+}
+
+input{
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+input:hover{
+    background-color: rgba(255, 223, 168, 0.5);
+    box-shadow: 8px 8px 8px rgba(255, 206, 101, 0.74);
+}
+
+#ricordami{
+    accent-color: orange;
+}
+
+.btn-light{
+    box-shadow: 8px 8px 8px rgba(190, 178, 154, 0.966);
+}
+
+.btn-light:hover{
+    background-color: rgba(255, 175, 25, 0.966);
+    color: black;
+    box-shadow: 8px 8px 8px rgba(255, 206, 101, 0.74);
+}
