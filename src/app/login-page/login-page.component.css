@@ -1,8 +1,8 @@
 .container-fluid{
-    text-align: center;
+    align-items: center;
 }
 
-.row{
+.myRow{
     padding-top: 5%;
 }
 

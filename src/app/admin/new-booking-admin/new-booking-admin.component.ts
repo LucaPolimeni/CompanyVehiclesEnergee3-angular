@@ -1,6 +1,8 @@
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-new-booking-admin',
@@ -9,14 +11,19 @@ import { NgForm } from '@angular/forms';
 })
 export class NewBookingAdminComponent implements OnInit {
   submitted = false;
+  booked = false;
+  currentId = 0;
   cognome ="";
   nome = "";
   dataInizio="";
   dataFine= "";
 
-  constructor() { }
+  vehiclesArray = [];
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.getAvailablesVehicles();
   }
 
   onSubmit(form: NgForm){
@@ -32,4 +39,33 @@ export class NewBookingAdminComponent implements OnInit {
 
     form.reset();
   }
+
+  getAvailablesVehicles(){
+      this.http.get("http://localhost:8080/api/vehicles/findAll")
+      .pipe(
+        map(responseData => {
+
+          for (const key in responseData){
+            if(responseData.hasOwnProperty(key)){
+              this.vehiclesArray.push({...responseData[key], id:key});
+            }
+          }
+          console.log("array -> ", this.vehiclesArray);
+          console.log("targa -> ", this.vehiclesArray[0].id);
+          console.log("produttore -> ", this.vehiclesArray[0].modelId.manufacturerId.name);
+          console.log("modello -> ", this.vehiclesArray[0].modelId.name);
+          console.log("anno -> ", this.vehiclesArray[0].modelId.yearProd);
+          console.log("alimentazione -> ", this.vehiclesArray[0].fuel);
+        })
+      )
+      .subscribe(posts => {
+        //console.log(posts)
+      })
+    } 
+
+    bookVehicle(id: number){
+      this.booked = true;
+      this.currentId = id;
+    }
+  
 }

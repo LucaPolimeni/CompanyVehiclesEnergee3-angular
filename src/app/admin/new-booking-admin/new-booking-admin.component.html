@@ -17,12 +17,12 @@
             <div class="col-md-3 myColumn">
                 <div class="col-md-6 form-group myColumn ">
                     <label class="active" for="startDate">Data inizio*</label>
-                    <input class= "form-control" type="date" ngModel name="startDate" required #startDate="ngModel">
+                    <input class= "form-control" type="datetime-local" ngModel name="startDate" required #startDate="ngModel">
                     <span class="help-block" *ngIf="!startDate.valid && startDate.touched">Inserisci una data</span>
                 </div>
                 <div class="col-md-6 form-group myColumn">
                     <label class="active" for="endDate">Data fine*</label>
-                    <input class= "form-control" type="date" ngModel name="endDate" required #endDate="ngModel">
+                    <input class= "form-control" type="datetime-local" ngModel name="endDate" required #endDate="ngModel">
                     <span class="help-block" *ngIf="!endDate.valid && endDate.touched">Inserisci una data</span>
                 </div>
             </div>
@@ -44,3 +44,17 @@
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="row" *ngIf="booked">
+        <h1 id="success">Veicolo <b>{{vehiclesArray[currentId].modelId.manufacturerId.name}} {{vehiclesArray[currentId].modelId.name}}</b> prenotato con successo</h1>
+    </div>
+    <div class="row myRow" *ngIf="!booked">
+        <div class="col-md-4 vehicle" *ngFor="let in of vehiclesArray;let i = index">
+            <p id="vehicleName">{{vehiclesArray[i].modelId.manufacturerId.name}} {{vehiclesArray[i].modelId.name}}</p>
+            <p>Targa: {{vehiclesArray[i].id}}</p>
+            <p>Anno: {{vehiclesArray[i].modelId.yearProd}}</p>
+            <p>Alimentazione: {{vehiclesArray[i].fuel}}</p>
+            <a (click)="bookVehicle(i)" id="prenota">Prenota</a>
+        </div>
+    </div>
+</div>

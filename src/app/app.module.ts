@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
@@ -39,6 +41,8 @@ import {AdminComponent} from "./admin/admin.component";
   imports: [
     BrowserModule,
     MatTableModule,
+    MatInputModule,
+    MatSortModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule

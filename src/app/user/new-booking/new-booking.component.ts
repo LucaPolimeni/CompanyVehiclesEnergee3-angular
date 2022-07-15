@@ -21,6 +21,9 @@ export class NewBookingComponent implements OnInit {
 
     this.dataInizio = form.value.startDate;
     this.dataFine = form.value.endDate;
+
+    console.log(this.dataInizio);
+    console.log(this.dataFine);
     form.reset();
   }
 
