@@ -1,14 +1,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 logo">
-            <img src="../../assets/images/E3.png" alt="E3 Logo" class="img-responsive"> 
+            <img src="../../assets/images/E3.png" alt="E3 Logo" class="img-responsive">
         </div>
         <div class="col-md-2 myNavigationBar" id="nome">
-                <p>Nome Cognome</p>
+                <p>{{firstName + ' ' + lastName}}</p>
         </div>
         <div class="col-md-8 myNavigationBar">
             <div class="col-md-3">
-                <button routerLinkActive="active" routerLink="newBooking">Nuova prenotazione</button>               
+                <button routerLinkActive="active" routerLink="newBooking">Nuova prenotazione</button>
             </div>
             <div class="col-md-3">
                 <button routerLinkActive="active" routerLink="myBookings">Le mie prenotazioni</button>
@@ -17,16 +17,8 @@
                 <button routerLinkActive="active" routerLink="myProfile">Il mio profilo</button>
             </div>
             <div class="col-md-3">
-                <button routerLink="/login">Logout</button>
+                <button routerLink="/login" (click)="onLogout()">Logout</button>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <router-outlet></router-outlet>
-      </div>
     </div>
 </div>

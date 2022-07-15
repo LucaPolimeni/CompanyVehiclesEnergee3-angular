@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-header-user',
@@ -6,9 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-user.component.css']
 })
 export class HeaderUserComponent implements OnInit {
-  constructor() { }
+  firstName: string;
+  lastName: string;
+
+  constructor() {}
 
   ngOnInit(): void {
+    this.firstName = sessionStorage.getItem("firstName") ? sessionStorage.getItem("firstName") : localStorage.getItem("firstName");
+    this.lastName = sessionStorage.getItem("lastName") ? sessionStorage.getItem("lastName") : localStorage.getItem("lastName");
+  }
+
+  onLogout(){
+    sessionStorage.clear();
+    localStorage.clear();
   }
 
 }

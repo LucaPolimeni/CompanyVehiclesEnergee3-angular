@@ -16,6 +16,9 @@ import { VehiclesAdminComponent } from './admin/vehicles-admin/vehicles-admin.co
 import { EmployeesAdminComponent } from './admin/employees-admin/employees-admin.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import {UserComponent} from "./user/user.component";
+import {AdminComponent} from "./admin/admin.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     NewBookingAdminComponent,
     BookingsAdminComponent,
     VehiclesAdminComponent,
-    EmployeesAdminComponent
+    EmployeesAdminComponent,
+    UserComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
