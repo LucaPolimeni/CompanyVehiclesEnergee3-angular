@@ -11,7 +11,7 @@ import { HeaderUserComponent } from './user/header-user/header-user.component';
 import { NewBookingComponent } from './user/new-booking/new-booking.component';
 import { MyBookingsComponent } from './user/my-bookings/my-bookings.component';
 import { MyProfileComponent } from './user/my-profile/my-profile.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginPageComponent } from './auth/login-page.component';
 import { NewBookingAdminComponent } from './admin/new-booking-admin/new-booking-admin.component';
 import { BookingsAdminComponent } from './admin/bookings-admin/bookings-admin.component';
 import { VehiclesAdminComponent } from './admin/vehicles-admin/vehicles-admin.component';
@@ -21,6 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
+import {NavbarComponent} from "./navbar/navbar.component";
+import {PageNotFoundComponent} from "./PageNotFound/pageNotFound.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {AdminComponent} from "./admin/admin.component";
     VehiclesAdminComponent,
     EmployeesAdminComponent,
     UserComponent,
-    AdminComponent
+    AdminComponent,
+    NavbarComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

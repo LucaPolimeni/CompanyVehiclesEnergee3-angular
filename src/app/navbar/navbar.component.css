@@ -1,0 +1,49 @@
+.row{
+    display: flex;
+}
+
+.logo{
+    padding: 5px;
+}
+
+.myNavigationBar{
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#nome{
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 4%;
+    padding-top: 1%;
+}
+
+#nome:hover{
+    color: orange;
+    transform: scale(1.05);
+}
+
+button { 
+    width: 100%;
+    padding: 5px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background-color: transparent;
+    border: 0.1px solid rgb(236, 236, 236);
+    box-shadow: 8px 8px 8px rgb(236, 236, 236);
+    border-radius: 5px;
+}
+
+button:hover, :focus, .active{
+    background-color: orange;
+    box-shadow: 8px 8px 8px rgb(197, 196, 196);
+    font-weight: bold;
+    color: white;
+    transform: scale(1.1);
+}
+
+.col-md-3{
+    padding-right: 5%;
+}
