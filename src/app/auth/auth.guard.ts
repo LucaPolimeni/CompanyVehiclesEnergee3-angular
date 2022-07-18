@@ -23,6 +23,8 @@ export class AuthGuard implements CanActivate{
       | boolean
       | UrlTree {
 
+    this.loginService.autoLogin();
+
     if (state.url.includes("/admin")) {
       return this.canActivateAdmin();
     } else if (state.url.includes("/user")) {
@@ -38,8 +40,6 @@ export class AuthGuard implements CanActivate{
       return true;
     }
 
-    // this.loginService.isAdmin = false;
-    // this.loginService.isLogged = false;
     return this.router.createUrlTree(['/login']);
   }
 
@@ -48,8 +48,6 @@ export class AuthGuard implements CanActivate{
       return true;
     }
 
-    // this.loginService.isAdmin = false;
-    // this.loginService.isLogged = false;
     return this.router.createUrlTree(['/login']);
   }
 

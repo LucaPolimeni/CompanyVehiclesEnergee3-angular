@@ -13,7 +13,6 @@ export class MyProfileComponent implements OnInit {
   id: number;
   telefono: number;
   employee: Employee = {email: null, firstName: null, id: null, lastName: null, phoneNumber: null, sex: null, taxCode: null};
-  //profilePic = "https://lh3.googleusercontent.com/a/AItbvmmerj5d2RT_qxezx_0eBsnfrrXsB2faDYt1-ccp=s96-c";
 
   constructor(private http: HttpClient) { }
 

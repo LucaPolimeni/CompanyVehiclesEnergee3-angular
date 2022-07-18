@@ -61,11 +61,11 @@ export class NewBookingAdminComponent implements OnInit {
       .subscribe(posts => {
         //console.log(posts)
       })
-    } 
+    }
 
     bookVehicle(id: number){
       this.booked = true;
       this.currentId = id;
     }
-  
+
 }

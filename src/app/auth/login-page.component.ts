@@ -30,12 +30,22 @@ export class LoginPageComponent implements OnInit {
     if(email == 'admin.admin@energee3.com'){
       this.loginService.isAdmin = true;
       this.loginService.isLogged = true;
+
+      if(this.signupForm.value.ricordami){
+        localStorage.setItem("admin", String(true));
+        localStorage.setItem("isLogged", String(true));
+      } else {
+        sessionStorage.setItem("admin", String(true));
+        sessionStorage.setItem("isLogged", String(true));
+      }
+
       this.router.navigate(['admin']);
 
     } else {
       authObs = this.loginService.login(email, this.signupForm.value.ricordami);
       authObs.subscribe(
         resData => {
+          this.loginService.isLogged = true;
           this.router.navigate(['user']);
         },
         error =>{

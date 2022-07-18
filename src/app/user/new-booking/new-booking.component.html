@@ -28,3 +28,18 @@
         </div>
     </div>
 </div>
+
+  <div class="container-fluid">
+  <div class="row" *ngIf="booked">
+    <h1 id="success">Veicolo <b>{{vehiclesArray[position].modelId.manufacturerId.name + " " + vehiclesArray[position].modelId.name + " " + vehiclesArray[position].id}}</b> prenotato con successo</h1>
+  </div>
+  <div class="row myRow" *ngIf="!booked">
+    <div class="col-md-4 vehicle" *ngFor="let in of vehiclesArray;let i = index">
+      <p id="vehicleName">{{vehiclesArray[i].modelId.manufacturerId.name}} {{vehiclesArray[i].modelId.name}}</p>
+      <p>Targa: {{vehiclesArray[i].id}}</p>
+      <p>Anno: {{vehiclesArray[i].modelId.yearProd}}</p>
+      <p>Alimentazione: {{vehiclesArray[i].fuel}}</p>
+      <a (click)="newBooking(i)" id="prenota">Prenota</a>
+    </div>
+  </div>
+</div>

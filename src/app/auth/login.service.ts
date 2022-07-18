@@ -24,12 +24,14 @@ export class LoginService implements OnInit{
             localStorage.setItem('id', String(responseData.id));
             localStorage.setItem('firstName', responseData.firstName);
             localStorage.setItem('lastName', responseData.lastName);
+            localStorage.setItem("isLogged", String(true));
           } else {
             sessionStorage.setItem('id', String(responseData.id));
             sessionStorage.setItem('firstName', responseData.firstName);
             sessionStorage.setItem('lastName', responseData.lastName);
+            sessionStorage.setItem("isLogged", String(true));
           }
-          this.isLogged = true;
+
         }));
   }
 
@@ -50,6 +52,16 @@ export class LoginService implements OnInit{
         break;
     }
     return throwError(errorMessage);
+  }
+
+  autoLogin() {
+    if (localStorage.getItem("admin") || sessionStorage.getItem("admin")) {
+      this.isAdmin = Boolean(localStorage.getItem("admin")) || Boolean(sessionStorage.getItem("isLogged"));
+      this.isLogged = Boolean(localStorage.getItem("isLogged")) || Boolean(sessionStorage.getItem("isLogged"));
+    } else if (localStorage.getItem("isLogged") || sessionStorage.getItem("isLogged")) {
+      this.isLogged = Boolean(sessionStorage.getItem("isLogged")) || Boolean(localStorage.getItem("isLogged"));
+    }
+
   }
 
 }

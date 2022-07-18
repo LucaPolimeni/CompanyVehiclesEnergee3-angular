@@ -15,8 +15,7 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
     'id',
     'vehicleId',
     'startDate',
-    'endDate',
-    'utilization'
+    'endDate'
   ]
 
   bookings: Bookings[] = [];
@@ -53,7 +52,6 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
     this.http.get<Bookings>("http://localhost:8080/api/bookings/findByEmployeeId/" + id)
       .pipe(
         map(responseData => {
-          console.log(responseData);
           for (const key in responseData){
             if(responseData.hasOwnProperty(key)){
               this.bookings.push({...responseData[key], id:key});
