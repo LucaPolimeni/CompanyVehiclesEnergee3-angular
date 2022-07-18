@@ -1,6 +1,6 @@
 .container-fluid{
     text-align: left;
-    padding-top: 3%;
+    padding-top: 2%;
     display:table;
     width: 100%;
     box-sizing: border-box;
@@ -60,4 +60,9 @@ th.mat-header-cell{
 
 tr.mat-row:hover{
     background-color: rgb(255, 218, 148);
+}
+
+.btn-success{
+    float:right;
+    margin-bottom: 1%;
 }

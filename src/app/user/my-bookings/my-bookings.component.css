@@ -38,11 +38,11 @@ input:hover{
 }
 
 input.ng-invalid.ng-touched{
-    border: 2px solid red;
+    border: 1px solid red;
 }
 
 .help-block{
-    color: red;
+    color:red;
 }
 
 table {
