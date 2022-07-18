@@ -47,7 +47,7 @@ export class NewBookingAdminComponent implements OnInit {
 
           for (const key in responseData){
             if(responseData.hasOwnProperty(key)){
-              this.vehiclesArray.push({...responseData[key], id:key});
+              this.vehiclesArray.push({...responseData[key], myId:key});
             }
           }
           console.log("array -> ", this.vehiclesArray);

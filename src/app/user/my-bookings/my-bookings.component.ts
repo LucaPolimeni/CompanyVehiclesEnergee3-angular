@@ -11,6 +11,7 @@ import {map} from "rxjs";
   styleUrls: ['./my-bookings.component.css']
 })
 export class MyBookingsComponent implements OnInit, OnDestroy {
+  expandedElement = false;
   displayedColumns: string[] = [
     'id',
     'vehicleId',
@@ -54,13 +55,18 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
         map(responseData => {
           for (const key in responseData){
             if(responseData.hasOwnProperty(key)){
-              this.bookings.push({...responseData[key], id:key});
+              this.bookings.push({...responseData[key], myId:key});
             }
           }
           this.dataSource = new MatTableDataSource(this.bookings);
         })
       ).subscribe();
 
+  }
+
+  getUtilization(id){
+    console.log("currentId -> ", id)
+    this.expandedElement = !this.expandedElement;
   }
 
 

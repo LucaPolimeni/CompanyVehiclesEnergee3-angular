@@ -6,9 +6,9 @@
 <!--           data-holder-rendered="true">-->
 <!--    </div>-->
 <!--  </div> <br>-->
-
-  <div class="row">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+     <div class="row">
+    
       <div class="col-md-6 col-md-offset-3" id="profile-div">
           <div class="row list">
               <div class="col-md-6">Id dipendente:</div>
@@ -48,7 +48,7 @@
               <div class="col-md-6">{{employee.taxCode}}</div>
           </div>
       </div>
-    </form>
+    
   </div>
 
         <div class="row" id="button-row">
@@ -61,5 +61,5 @@
                 <p>Il numero è stato aggiornato in <b>{{ telefono }}</b></p>
             </div>
         </div>
-
+    </form>
 </div>

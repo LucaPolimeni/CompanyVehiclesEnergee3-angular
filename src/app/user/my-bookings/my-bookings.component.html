@@ -23,8 +23,6 @@
         </div>
     </form>
 
-
-
 </div>
 <div class="container-fluid">
 
@@ -32,12 +30,11 @@
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
               <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-              <td mat-cell *matCellDef="let booking">{{ booking[column] }}</td>
+              <td mat-cell *matCellDef="let booking" (click)="getUtilization(booking['id'])">{{ booking[column] ? booking[column] : "+" }}</td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns">
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-            </tr>
             <tr mat-row *matRowDef="let bookingRow; columns: displayedColumns"></tr>
           </table>
     </div>

@@ -47,13 +47,14 @@ export class MyProfileComponent implements OnInit {
 
   onSubmit(form: NgForm){
     this.telefono= form.value.telefono;
+    const phoneNumber = this.telefono;
 
     if(!form.valid || !this.id){
       return;
     }
 
     this.http.put("http://localhost:8080/api/employees/updatePhone/" + this.id,
-      {phoneNumber: this.telefono}
+      {phoneNumber}
       ).subscribe(responseData =>{
         console.log(responseData);
         this.submitted = true;

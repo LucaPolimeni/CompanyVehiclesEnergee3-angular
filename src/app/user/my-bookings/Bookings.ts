@@ -3,5 +3,4 @@ export interface Bookings {
     vehicleId: string
     startDate: string,
     endDate: string
-    utilization: number
   }
