@@ -44,3 +44,20 @@ input.ng-invalid.ng-touched{
 .help-block{
     color: red;
 }
+
+table {
+  width: 100%;
+  text-align: center;
+}
+
+th.mat-header-cell{
+  text-align: center;
+  background-color: orange;
+  font-weight: bold;
+  font-size: large;
+}
+
+tr.mat-row:hover{
+  background-color: rgb(255, 218, 148);
+}
+

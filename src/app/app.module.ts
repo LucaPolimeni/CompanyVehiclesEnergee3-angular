@@ -6,17 +6,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
-import { NewBookingComponent } from './user/new-booking/new-booking.component';
+import { NewBookingComponent } from './new-booking/new-booking.component';
 import { MyBookingsComponent } from './user/my-bookings/my-bookings.component';
 import { MyProfileComponent } from './user/my-profile/my-profile.component';
 import { LoginPageComponent } from './auth/login-page.component';
-import { NewBookingAdminComponent } from './admin/new-booking-admin/new-booking-admin.component';
 import { BookingsAdminComponent } from './admin/bookings-admin/bookings-admin.component';
 import { VehiclesAdminComponent } from './admin/vehicles-admin/vehicles-admin.component';
 import { EmployeesAdminComponent } from './admin/employees-admin/employees-admin.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {NavbarComponent} from "./navbar/navbar.component";
@@ -29,7 +27,6 @@ import {PageNotFoundComponent} from "./PageNotFound/pageNotFound.component";
     MyBookingsComponent,
     MyProfileComponent,
     LoginPageComponent,
-    NewBookingAdminComponent,
     BookingsAdminComponent,
     VehiclesAdminComponent,
     EmployeesAdminComponent,

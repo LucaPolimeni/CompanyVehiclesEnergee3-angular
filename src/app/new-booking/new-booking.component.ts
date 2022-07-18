@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {tap} from "rxjs";
-import {Bookings} from "../my-bookings/Bookings";
+import {LoginService} from "../auth/login.service";
+import {Employee} from "../admin/employees-admin/Employee";
 
 export interface Vehicles {
   id: string,
@@ -30,7 +30,7 @@ export class NewBookingComponent implements OnInit {
   position: number = null;
   vehiclesArray: Vehicles[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loginService: LoginService) { }
 
   ngOnInit() {
     if(localStorage.getItem("id")){
@@ -44,9 +44,14 @@ export class NewBookingComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
+    this.vehiclesArray = [];
     this.startDate = form.value.startDate;
     this.endDate = form.value.endDate;
     this.getAvailable(form.value.startDate, form.value.endDate);
+
+    if (this.isAdmin()){
+      this.getEmployeeId(form.value.email);
+    }
 
   }
 
@@ -62,7 +67,6 @@ export class NewBookingComponent implements OnInit {
 
     this.submitted = true;
   }
-
 
   newBooking(index: number){
       this.insertBooking(
@@ -89,6 +93,17 @@ export class NewBookingComponent implements OnInit {
       if(resData == 1) this.booked = true;
     });
 
+  }
+
+  isAdmin(){
+    return this.loginService.isAdmin;
+  }
+
+  getEmployeeId(email: string){
+    this.http.get<Employee>('http://localhost:8080/api/employees/findByEmail/' + email)
+      .subscribe(resData => {
+        this.id = resData.id;
+      });
   }
 
 }

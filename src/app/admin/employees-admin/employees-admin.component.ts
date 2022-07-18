@@ -19,8 +19,7 @@ export class EmployeesAdminComponent implements OnInit {
   addedEmployee = false;
   nome = "";
   cognome = "";
-  employeesArray = [];
-  EmployeesData : Employee[] = this.employeesArray;
+  employeesData : Employee[] = [];
   dataSource: MatTableDataSource<Employee>;
 
   displayedColumns: string[] = [
@@ -32,7 +31,6 @@ export class EmployeesAdminComponent implements OnInit {
     'taxCode',
     'active'
   ]
-
 
   constructor(private http: HttpClient) { }
 
@@ -51,25 +49,26 @@ export class EmployeesAdminComponent implements OnInit {
   }
 
   onAddedEmployee(form: NgForm){
-    this.addedEmployee = true;
+    if(!form.valid){
+      return;
+    }
+
     this.nome = form.value.name;
     this.cognome = form.value.lastName;
-    var firstName = this.nome;
-    var lastName = this.cognome;
-    var sex = form.value.sex;
-    var phoneNumber = form.value.phone;
-    var email = firstName + "." + lastName + "@energee3.com";
-    var taxCode = form.value.fiscalCode;
-    var active = true;
 
-    //console.log(firstName, lastName, sex, phoneNumber, email, taxCode);
+    let email = form.value.name + "." + form.value.lastName + "@energee3.com";
+    email = email.toLowerCase();
 
-    this.http.post(
-      "http://localhost:8080/api/employees/newEmployee", 
-      {firstName, lastName, sex, phoneNumber, email, taxCode, active}
-      ).subscribe(responseData =>{
-        console.log(responseData);
-      });
+    this.newEmployee(
+      this.nome,
+      this.cognome,
+      form.value.sex,
+      form.value.phone,
+      email,
+      form.value.fiscalCode,
+      true
+    );
+
   }
 
   getEmployees(){
@@ -80,19 +79,37 @@ export class EmployeesAdminComponent implements OnInit {
 
           for (const key in responseData){
             if(responseData.hasOwnProperty(key)){
-              this.employeesArray.push({...responseData[key], id:key});
+              this.employeesData.push({...responseData[key], id:key});
             }
           }
-          console.log("array -> ", this.EmployeesData);
-          this.dataSource = new MatTableDataSource(this.EmployeesData);
+
+          this.dataSource = new MatTableDataSource(this.employeesData);
         })
       )
       .subscribe(posts => {
-        //console.log(posts)
       })
-    } 
+    }
     this.dataLoaded = true; //per evitare che ogni volta che clicco "cerca" vengano ricaricati i dati in nuove righe della tabella
     this.showedTable = true;
+  }
+
+  newEmployee(firstName, lastName, sex, phoneNumber, email, taxCode, active){
+    this.http.post<Employee>(
+      "http://localhost:8080/api/employees/newEmployee",{
+        firstName ,
+        lastName,
+        sex,
+        phoneNumber,
+        email,
+        taxCode,
+        active
+      }
+    ).subscribe(responseData => {
+      console.log(responseData);
+      this.addedEmployee = true;
+    }, error => {
+      console.log(error);
+    });
   }
 
   applyFilter(event: Event) {

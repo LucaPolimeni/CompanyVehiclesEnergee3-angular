@@ -3,11 +3,10 @@ import { RouterModule, Routes } from "@angular/router";
 import { AdminComponent } from "./admin/admin.component";
 import { BookingsAdminComponent } from "./admin/bookings-admin/bookings-admin.component";
 import { EmployeesAdminComponent } from "./admin/employees-admin/employees-admin.component";
-import { NewBookingAdminComponent } from "./admin/new-booking-admin/new-booking-admin.component";
 import { VehiclesAdminComponent } from "./admin/vehicles-admin/vehicles-admin.component";
 import { MyBookingsComponent } from "./user/my-bookings/my-bookings.component";
 import { MyProfileComponent } from "./user/my-profile/my-profile.component";
-import { NewBookingComponent } from "./user/new-booking/new-booking.component";
+import { NewBookingComponent } from "./new-booking/new-booking.component";
 import {UserComponent} from "./user/user.component";
 import {PageNotFoundComponent} from "./PageNotFound/pageNotFound.component";
 import {AuthGuard} from "./auth/auth.guard";
@@ -19,7 +18,7 @@ const appRoutes: Routes = [
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard],
       children: [
         {path: '', redirectTo: 'newBookingAdmin', pathMatch: 'full'},
-        {path: 'newBookingAdmin', component: NewBookingAdminComponent},
+        {path: 'newBookingAdmin', component: NewBookingComponent},
         {path: 'bookings', component: BookingsAdminComponent},
         {path: 'vehicles', component: VehiclesAdminComponent},
         {path: 'employees', component: EmployeesAdminComponent},
