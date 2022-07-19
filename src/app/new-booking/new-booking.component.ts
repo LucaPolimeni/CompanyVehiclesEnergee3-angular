@@ -29,9 +29,12 @@ export class NewBookingComponent implements OnInit {
   startDate: any;
   endDate: any;
   position: number = null;
+  date: string;
   vehiclesArray: Vehicles[] = [];
 
-  constructor(private http: HttpClient, private loginService: LoginService) { }
+  constructor(private http: HttpClient, private loginService: LoginService) {
+    this.date = new Date().toISOString().slice(0, 16);
+  }
 
   ngOnInit() {
     if(localStorage.getItem("id")){
@@ -51,12 +54,20 @@ export class NewBookingComponent implements OnInit {
     this.startDate = form.value.startDate;
     this.endDate = form.value.endDate;
 
+    if(!form.valid){
+      return;
+    }
+
     if (this.isAdmin()){
       this.getEmployeeId(form.value.email);
     }
 
     if(!this.error) {
-      this.getAvailable(form.value.startDate, form.value.endDate);
+      if((this.startDate < this.endDate)) {
+        this.getAvailable(form.value.startDate, form.value.endDate);
+      } else {
+        this.error = true;
+      }
     }
   }
 
