@@ -24,6 +24,7 @@ export interface Vehicles {
 export class NewBookingComponent implements OnInit {
   submitted = false;
   booked = false;
+  error = null;
   id: number;
   startDate: any;
   endDate: any;
@@ -45,14 +46,18 @@ export class NewBookingComponent implements OnInit {
 
   onSubmit(form: NgForm){
     this.vehiclesArray = [];
+    this.booked = false;
+    this.error = null;
     this.startDate = form.value.startDate;
     this.endDate = form.value.endDate;
-    this.getAvailable(form.value.startDate, form.value.endDate);
 
     if (this.isAdmin()){
       this.getEmployeeId(form.value.email);
     }
 
+    if(!this.error) {
+      this.getAvailable(form.value.startDate, form.value.endDate);
+    }
   }
 
   getAvailable(startDate, endDate){
@@ -90,7 +95,7 @@ export class NewBookingComponent implements OnInit {
       "endDate": endDate
     }).subscribe(resData => {
       console.log(resData);
-      if(resData == 1) this.booked = true;
+      resData == 1 ? this.booked = true : this.error = true;
     });
 
   }
@@ -103,6 +108,8 @@ export class NewBookingComponent implements OnInit {
     this.http.get<Employee>('http://localhost:8080/api/employees/findByEmail/' + email)
       .subscribe(resData => {
         this.id = resData.id;
+      }, error => {
+        this.error = true;
       });
   }
 
