@@ -2,13 +2,13 @@
     <div class="row">
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
 
-            <div class="col-md-3"></div>
-            <div class="col-md-3 myColumn">
+            <div class="col-md-2"></div>
+            <div class="col-md-4 myColumn">
                 <label class="active" for="email">email Dipendente</label>
                 <input class= "form-control" matInput (keyup)="applyFilter($event)" type="email" ngModel name="email" placeholder="@energee3.com" pattern="[a-zA-Z]*[.][a-zA-Z0-9]*@(energee3.com|ENERGEE3.COM)" #email="ngModel">
                 <span class="help-block" *ngIf="!email.valid">Email non valida</span>
             </div>
-            <div class="col-md-3 myColumn">
+            <div class="col-md-4 myColumn">
                 <div class="col-md-6 form-group myColumn">
                     <label class="active" >Nome</label>
                     <input  class= "form-control" matInput (keyup)="applyFilter($event)" type="text" ngModel name="nome" placeholder="ex. Mario" #nome="ngModel">
@@ -24,7 +24,7 @@
                 [disabled]="!email.valid">Cerca</button>
             </div>
         </form>
-        <div class="col-md-1 myColumn"></div>
+        <div class="col-md-2 myColumn"></div>
     </div>
 </div>
 
@@ -74,6 +74,7 @@
     </div>
 </div>
 
+<!--div class="container-fluid" *ngIf="!add"-->
 <div class="container-fluid">
     <div class="row" *ngIf="showedTable">
         <div class="col-md-12 ">

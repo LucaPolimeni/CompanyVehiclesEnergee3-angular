@@ -23,7 +23,7 @@
                 <div class="col-md-3 myColumn">
                     <label class="active" for="model">Modello</label>
                     <select class= "form-control" ngModel name="model" #model="ngModel">
-                        <option value="astra">Astra</option>
+                        <option *ngFor="let model of modelsArray" value="{{model.name}}">{{model.name}} ({{model.yearProd}})</option>
                     </select>
                 </div>
                 <div class="col-md-3 myColumn">
@@ -49,42 +49,39 @@
             <div class="col-md-1">
                 <button type="button" class="btn btn-danger" (click)="addVehicle()">X</button>
             </div>
-            <form (ngSubmit)="onAdd(f)" #f="ngForm">
-                <div class="col-md-10 myColumn">
+            <form (ngSubmit)="onAddVehicle(f)" #f="ngForm">
+                <div class="col-md-9 myColumn">
                     <div class="col-md-3 ">
                         <label class="active" for="licensePlate">Targa*</label>
                         <input class= "form-control" type="text" ngModel name="licensePlate" placeholder="ex. AB123CD" pattern="[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}" #licensePlate="ngModel" required>
                         <span class="help-block" *ngIf="!licensePlate.valid && licensePlate.touched">Targa non valida</span>
                     </div>
-                    <div class="col-md-2 ">
+                    <div class="col-md-3 ">
                         <label class="active" for="fuel">Alimentazione*</label>
                         <select class="form-control" ngModel name="fuel" required>
-                            <option value="benzina">Benzina</option>
-                            <option value="diesel">Diesel</option>
-                            <option value="metano">Metano</option>
-                            <option value="gpl">GPL</option>
-                            <option value="hybrid">Hybrid</option>
+                            <option value="Benzina">Benzina</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Metano">Metano</option>
+                            <option value="Gpl">GPL</option>
+                            <option value="Hybrid">Hybrid</option>
                         </select>
                     </div>
-                    <div class="col-md-2 ">
+                    <div class="col-md-3 ">
                         <label class="active" for="manufacturer">Produttore*</label>
-                        <select class= "form-control" ngModel name="manufacturer" required>
-                            <option value="opel">Opel</option>
+                        <select class= "form-control" ngModel name="manufacturer" required (change)="getModelsByManufacturer($event)">
+                            <option *ngFor="let manufacturer of manufacturersArray" value="{{manufacturer.name}}">{{manufacturer.name}}</option>
+                            <option value="add">--Aggiungi--</option>
                         </select>
                     </div>
-                    <div class="col-md-2 ">
+                    <div class="col-md-3 ">
                         <label class="active" for="model">Modello*</label>
-                        <select class= "form-control" ngModel name="model" required>
-                            <option value="astra">Astra</option>
+                        <select class= "form-control" ngModel name="model" required (change)="addModelEvent($event)">
+                            <option *ngFor="let model of modelsByManufacturerArray" value="{{model.id}}">{{model.name}} ({{model.yearProd}})</option>
+                            <option value="add">--Aggiungi--</option>
                         </select>
-                    </div>
-                    <div class="col-md-2 ">
-                        <label class="active" for="year">Anno*</label>
-                        <input class= "form-control" type="text" ngModel name="year" placeholder="ex. 2019" pattern="[0-9]{4}" #year="ngModel" required>
-                        <span class="help-block" *ngIf="!year.valid && year.touched">Anno non valido</span>
                     </div>
                 </div>
-                <div class="col-md-1 myColumn">
+                <div class="col-md-3 myColumn">
                     <button type="submit" class="btn btn-light" [disabled]="!f.valid">Aggiungi Veicolo</button>
                 </div>
             </form>
@@ -92,13 +89,62 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-        <h3 *ngIf="addedVehicle && add" style="text-align: center; padding-top: 2%;">Aggiunto il veicolo {{ targa }} [{{ produttore }} {{ modello }} {{ alimentazione }} {{ anno }}]</h3>
+        <h3 *ngIf="addedVehicle && add" style="text-align: center; padding-top: 2%;">Aggiunto il veicolo <b>{{ produttore }} {{ alimentazione }} {{ targa }}</b> </h3>
         </div>
     </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="addManufacturerButton && add"  style="margin-top:3%">
+    <div class="row" *ngIf="!manufacturerAdded">
+        <form (ngSubmit)="addManufacturer(f)" #f="ngForm">
+            <div class="col-md-4 myColumn"></div>
+            <div class="col-md-2 myColumn">
+                <label class="active" for="manufacturerName">Nome Produttore</label>
+                <input class= "form-control" type="text" ngModel name="manufacturerName" placeholder="ex. Opel" #manufacturerName="ngModel">
+                
+            </div>
+            <div class="col-md-2 myColumn">
+                <button type="submit" class="btn btn-light">Aggiungi Produttore</button>
+            </div>
+            <div class="col-md-4 myColumn"></div>
+        </form>
+    </div>
+    <div class="row" *ngIf="manufacturerAdded">
+        <h1>Produttore aggiunto</h1>
+    </div>
+</div>
 
+<div class="container-fluid" *ngIf="addModelButton && add" style="margin-top:3%">
+    <div class="row" *ngIf="!modelAdded">
+        <form (ngSubmit)="addModel(f)" #f="ngForm">
+            <div class="col-md-1 myColumn"></div>
+            <div class="col-md-4 myColumn">
+                <label class="active" for="manufacturer">Produttore*</label>
+                        <select class= "form-control" ngModel name="manufacturer" required>
+                            <option *ngFor="let manufacturer of manufacturersArray" value="{{manufacturer.id}}">{{manufacturer.name}}</option>
+                        </select>
+            </div>
+            <div class="col-md-2 myColumn">
+                <label class="active" for="manufacturerName">Nome Modello</label>
+                <input class= "form-control" type="text" ngModel name="modelName" placeholder="ex. Astra" #modelName="ngModel"> 
+            </div>
+            <div class="col-md-2 myColumn">
+                <label class="active" for="year">Anno</label>
+                <input class= "form-control" type="text" ngModel name="year" placeholder="ex. 2018"> 
+            </div>
+            <div class="col-md-2 myColumn">
+                <button type="submit" class="btn btn-light">Aggiungi Modello</button>
+            </div>
+            <div class="col-md-1 myColumn"></div>
+        </form>
+    </div>
+    <div class="row" *ngIf="modelAdded">
+        <h1>Modello aggiunto</h1>
+    </div>
+</div>
+
+<!--div class="container-fluid" *ngIf="!add"-->
+<div class="container-fluid">
   <div class="row" *ngIf="showButton">
     <div class="col-md-12">
       <button type="button" class="btn btn-success " (click)="addVehicle()">Aggiungi Veicolo</button>
