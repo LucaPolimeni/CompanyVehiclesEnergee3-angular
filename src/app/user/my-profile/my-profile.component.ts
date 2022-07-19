@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {Employee} from "../../admin/employees-admin/Employee";
+import {Employee} from "../../shared/Employee";
 
 @Component({
   selector: 'app-my-profile',

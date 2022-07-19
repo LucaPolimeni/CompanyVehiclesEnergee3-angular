@@ -1,4 +1,4 @@
-<div class="container-fluid"  *ngIf="!showUtilization">
+<div class="container-fluid" *ngIf="!isAdmin() && !showUtilization">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
         <div class="row">
             <div class="col-md-1 myColumn"></div>
@@ -22,6 +22,46 @@
             </div>
         </div>
     </form>
+</div>
+
+<div class="container-fluid" *ngIf="isAdmin() && !showUtilization">
+    <div class="row">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="col-md-6 myColumn">
+                <div class="col-md-4 myColumn">
+                    <label class="active" for="idPrenotazione">id Prenotazione</label>
+                    <input class= "form-control" type="text" ngModel name="idPrenotazione" placeholder="ex. 45867" pattern="^[0-9]+$" #id="ngModel">
+                    <span class="help-block" *ngIf="!id.valid">id non valido</span>
+                </div>
+                <div class="col-md-4 myColumn">
+                    <label class="active" for="email">email Dipendente</label>
+                    <input class= "form-control" type="email" ngModel name="email" placeholder="@energee3.com" pattern="[a-zA-Z]*[.][a-zA-Z0-9]*@(energee3.com|ENERGEE3.COM)" #email="ngModel">
+                    <span class="help-block" *ngIf="!email.valid">Email non valida</span>
+                </div>
+                <div class="col-md-4 myColumn">
+                    <label class="active" for="licensePlate">Targa</label>
+                    <input class= "form-control" type="text" ngModel name="licensePlate" placeholder="ex. AB123CD" pattern="[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}" #licensePlate="ngModel">
+                    <span class="help-block" *ngIf="!licensePlate.valid">Targa non valida</span>
+                </div>
+            </div>
+
+            <div class="col-md-4 myColumn">
+                <div class="col-md-6 form-group myColumn">
+                    <label class="active" for="startDate">Data inizio</label>
+                    <input class= "form-control" type="date" ngModel name="startDate">
+                </div>
+                <div class="col-md-6 form-group myColumn">
+                    <label class="active" for="endDate">Data fine</label>
+                    <input class= "form-control" type="date" ngModel name="endDate">
+                </div>
+            </div>
+
+            <div class="col-md-1 myColumn">
+                <button type="submit" class="btn btn-light" [disabled]="!id.valid || !licensePlate.valid || !email.valid">Filtra</button>
+            </div>
+            <div class="col-md-1 myColumn"></div>
+        </form>
+    </div>
 </div>
 
 <div class="container-fluid"  *ngIf="showUtilization">
@@ -61,14 +101,14 @@
 <div class="container-fluid">
     <div class="row" *ngIf="!showUtilization">
         <table mat-table [dataSource]="dataSourceBookings" class="mat-elevation-z8">
-            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumnsBookings">
+            <ng-container [matColumnDef]="column" *ngFor="let column of isAdmin() ? displayedColumnsBookingsAdmin : displayedColumnsBookings">
               <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
               <td mat-cell *matCellDef="let booking" (click)="getUtilization(booking['id'])">{{ booking[column] ? booking[column] : "+" }}</td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsBookings"></tr>
+            <tr mat-header-row *matHeaderRowDef="isAdmin() ? displayedColumnsBookingsAdmin : displayedColumnsBookings"></tr>
 
-            <tr mat-row *matRowDef="let bookingRow; columns: displayedColumnsBookings"></tr>
+            <tr mat-row *matRowDef="let bookingRow; columns: isAdmin() ? displayedColumnsBookingsAdmin : displayedColumnsBookings"></tr>
           </table>
     </div>
 

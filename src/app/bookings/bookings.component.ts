@@ -1,21 +1,33 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { Bookings } from './Bookings';
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs";
-import { Utilizations } from './Utilizations';
+import { map } from 'rxjs';
+import { LoginService } from '../auth/login.service';
+import { Bookings } from '../shared/Bookings';
+import { Employee } from '../shared/Employee';
+import { Utilizations } from '../shared/Utilizations';
 
 @Component({
-  selector: 'app-my-bookings',
-  templateUrl: './my-bookings.component.html',
-  styleUrls: ['./my-bookings.component.css']
+  selector: 'app-bookings',
+  templateUrl: './bookings.component.html',
+  styleUrls: ['./bookings.component.css']
 })
-export class MyBookingsComponent implements OnInit, OnDestroy {
+export class BookingsComponent implements OnInit {
   showUtilization = false;
   bookingId;
+  employeeMail = "";
   displayedColumnsBookings: string[] = [
     'id',
+    'vehicleId',
+    'startDate',
+    'endDate',
+    'utilizations'
+  ]
+
+  displayedColumnsBookingsAdmin: string[] = [
+    'id',
+    'employeeId',
     'vehicleId',
     'startDate',
     'endDate',
@@ -35,10 +47,17 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
   //utilizations: Utilizations[] = [];
   dataSourceUtilizations: MatTableDataSource<Utilizations>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loginService: LoginService) { }
+
+  isAdmin(){
+    return this.loginService.isAdmin;
+  }
 
   ngOnInit() {
-    this.getBookings();
+    if (this.isAdmin())
+      this.getAllBookings();
+    else 
+      this.getBookingsByEmployeeId();
   }
 
   ngOnDestroy() {
@@ -49,18 +68,49 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
     console.log(form.value);
   }
 
-  getBookings(){
+  //getEmailEmployeeById(employeeId){
+  //  console.log("getEmailByEmployeeId --> ", employeeId);
+  //  this.http.get<Employee>("http://localhost:8080/api/employees/findById/" + employeeId)
+  //    .subscribe(data => {
+ //      console.log("SUBSCRIBE  -->  ", data["email"]);
+  //      this.employeeMail = data["email"]
+  //    });
+  //  console.log("FUNCTION  -->  ", this.employeeMail);
+  //}
+
+  getAllBookings(){
+    this.http.get<Bookings>("http://localhost:8080/api/bookings/findAll")
+      .pipe(
+        map(responseData => {
+          for (const key in responseData){
+            if(responseData.hasOwnProperty(key)){
+              //this.getEmailEmployeeById(responseData[key]["employeeId"]);
+              //responseData[key]["employeeId"] = this.employeeMail;
+
+              const myStartDate = responseData[key]["startDate"];
+              responseData[key]["startDate"] = myStartDate.substr(0, myStartDate.indexOf("T")) + "  - ore " + myStartDate.substr(myStartDate.indexOf("T")+1, 5)
+
+              const myEndDate = responseData[key]["endDate"];
+              responseData[key]["endDate"] = myEndDate.substr(0, myEndDate.indexOf("T")) + "  - ore " + myEndDate.substr(myEndDate.indexOf("T")+1, 5)
+
+              this.bookings.push({...responseData[key], myId:key});
+            }
+          }
+          this.dataSourceBookings = new MatTableDataSource(this.bookings);
+          console.log(this.bookings)
+        })
+      ).subscribe();
+
+  }
+  getBookingsByEmployeeId(){
     let id: number;
 
     if(localStorage.getItem("id")){
       id = Number(localStorage.getItem("id"));
-
     } else if (sessionStorage.getItem("id")) {
       id = Number(sessionStorage.getItem("id"));
-
     } else {
       return;
-
     }
 
     this.http.get<Bookings>("http://localhost:8080/api/bookings/findByEmployeeId/" + id)
@@ -97,12 +147,11 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
             const myEndDate = responseData[key]["endDate"];
             responseData[key]["endDate"] = myEndDate.substr(0, myEndDate.indexOf("T")) + "  - ore " + myEndDate.substr(myEndDate.indexOf("T")+1, 5)
 
-            console.log(responseData[key]["startDate"]);
             utilizations.push({...responseData[key], myId:key});
           }
         }
         this.dataSourceUtilizations = new MatTableDataSource(utilizations);
-        console.log(responseData);
+        //console.log(responseData);
       })
     ).subscribe()
 
@@ -133,6 +182,5 @@ export class MyBookingsComponent implements OnInit, OnDestroy {
 
       this.getUtilization(this.bookingId)
   }
-
 
 }

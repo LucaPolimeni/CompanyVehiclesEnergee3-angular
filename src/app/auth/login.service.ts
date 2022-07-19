@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Employee} from "../admin/employees-admin/Employee";
+import {Employee} from "../shared/Employee";
 import {catchError, tap } from "rxjs/operators";
 import {throwError} from "rxjs";
 

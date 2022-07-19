@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { MatColumnDef, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { map, Observable } from 'rxjs';
-import { Employee } from './Employee';
+import { Employee } from '../../shared/Employee';
 
 @Component({
   selector: 'app-employees-admin',

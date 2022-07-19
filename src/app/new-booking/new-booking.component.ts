@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {LoginService} from "../auth/login.service";
-import {Employee} from "../admin/employees-admin/Employee";
+import {Employee} from "../shared/Employee";
 
 export interface Vehicles {
   id: string,

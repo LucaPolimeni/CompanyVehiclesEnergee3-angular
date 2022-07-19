@@ -7,10 +7,8 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { NewBookingComponent } from './new-booking/new-booking.component';
-import { MyBookingsComponent } from './user/my-bookings/my-bookings.component';
 import { MyProfileComponent } from './user/my-profile/my-profile.component';
 import { LoginPageComponent } from './auth/login-page.component';
-import { BookingsAdminComponent } from './admin/bookings-admin/bookings-admin.component';
 import { VehiclesAdminComponent } from './admin/vehicles-admin/vehicles-admin.component';
 import { EmployeesAdminComponent } from './admin/employees-admin/employees-admin.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,21 +17,21 @@ import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {PageNotFoundComponent} from "./PageNotFound/pageNotFound.component";
+import { BookingsComponent } from './bookings/bookings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewBookingComponent,
-    MyBookingsComponent,
     MyProfileComponent,
     LoginPageComponent,
-    BookingsAdminComponent,
     VehiclesAdminComponent,
     EmployeesAdminComponent,
     UserComponent,
     AdminComponent,
     NavbarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    BookingsComponent
   ],
   imports: [
     BrowserModule,
