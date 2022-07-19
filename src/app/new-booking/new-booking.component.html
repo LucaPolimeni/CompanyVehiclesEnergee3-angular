@@ -5,12 +5,12 @@
             <div class="col-md-4 myColumn">
                 <div class="col-md-6 form-group">
                     <label class="active" for="startDate">Data inizio</label>
-                    <input class= "form-control" id= "startDate" type="datetime-local" ngModel name="startDate" required #startDate="ngModel">
+                    <input class= "form-control" id= "startDate" type="datetime-local" [min]="date" ngModel name="startDate" required #startDate="ngModel">
                     <span class="help-block" *ngIf="!startDate.valid && startDate.touched">Inserisci una data</span>
                 </div>
                 <div class="col-md-6 form-group">
                     <label class="active" for="endDate">Data fine</label>
-                    <input class= "form-control" id= "endDate" type="datetime-local" ngModel name="endDate" required #endDate="ngModel">
+                    <input class= "form-control" id= "endDate" type="datetime-local" [min]="f.value.startDate ? f.value.startDate : this.date" ngModel name="endDate" required #endDate="ngModel">
                     <span class="help-block" *ngIf="!endDate.valid && endDate.touched">Inserisci una data</span>
                 </div>
             </div>
@@ -46,12 +46,12 @@
         <div class="col-md-3 myColumn">
           <div class="col-md-6 form-group myColumn ">
             <label class="active" for="startDate">Data inizio</label>
-            <input class= "form-control" type="datetime-local" ngModel name="startDate" required #startDate="ngModel">
+            <input class= "form-control" type="datetime-local" [min]="date" ngModel name="startDate" required #startDate="ngModel">
             <span class="help-block" *ngIf="!startDate.valid && startDate.touched">Inserisci una data</span>
           </div>
           <div class="col-md-6 form-group myColumn">
             <label class="active" for="endDate">Data fine</label>
-            <input class= "form-control" type="datetime-local" ngModel name="endDate" required #endDate="ngModel">
+            <input class= "form-control" type="datetime-local" [min]="f.value.startDate ? f.value.startDate : this.date" ngModel name="endDate" required #endDate="ngModel">
             <span class="help-block" *ngIf="!endDate.valid && endDate.touched">Inserisci una data</span>
           </div>
         </div>
