@@ -4,6 +4,15 @@ import {Vehicles} from "../../new-booking/new-booking.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {HttpClient} from "@angular/common/http";
 
+export interface VehicleModel {
+  Targa: string,
+  Alimentazione: string,
+  Modello: string,
+  Anno: number,
+  Produttore: string,
+  Attiva: boolean
+}
+
 @Component({
   selector: 'app-vehicles-admin',
   templateUrl: './vehicles-admin.component.html',
@@ -12,7 +21,7 @@ import {HttpClient} from "@angular/common/http";
 export class VehiclesAdminComponent implements OnInit, OnDestroy {
   add = false;
   addedVehicle = false;
-
+  showButton = true;
   targa = "";
   produttore = "";
   modello = "";
@@ -20,15 +29,15 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
   anno = "";
 
   displayedColumns: string[] = [
-    'id',
-    'fuel',
-    'modelId',
-    //'modelId[yearProd]',
-    'manufacturerId',
-    'active'
+    'Targa',
+    'Alimentazione',
+    'Produttore',
+    'Modello',
+    'Anno',
+    'Attiva'
   ];
 
-  vehiclesArray: Vehicles[] = [];
+  vehiclesArray: VehicleModel[] = [];
   dataSource: MatTableDataSource<any>;
 
   constructor(private http: HttpClient) {}
@@ -43,6 +52,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
 
   addVehicle(){
     this.add = !this.add;
+    this.showButton = !this.add;
   }
 
   onSubmit(form: NgForm){
@@ -62,14 +72,33 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
   getVehicles(){
     this.http.get<Vehicles>("http://localhost:8080/api/vehicles/findAll")
       .subscribe(responseData =>{
-        console.log(responseData);
         for (const key in responseData){
           if(responseData.hasOwnProperty(key)){
-            this.vehiclesArray.push({...responseData[key], myId:key});
+            const vehicle: VehicleModel = {
+              Attiva: false,
+              Alimentazione: "",
+              Anno: 0,
+              Modello: "",
+              Produttore: "",
+              Targa: ""
+            };
+
+            vehicle.Targa = responseData[key].id;
+            vehicle.Alimentazione = responseData[key].fuel;
+            vehicle.Attiva = responseData[key].active;
+            vehicle.Modello = responseData[key].modelId.name;
+            vehicle.Anno = responseData[key].modelId.yearProd;
+            vehicle.Produttore = responseData[key].modelId.manufacturerId.name;
+            this.vehiclesArray.push(vehicle);
+
           }
         }
         this.dataSource = new MatTableDataSource(this.vehiclesArray);
       });
+  }
+
+  insertVehicles(){
+    //this.http.post("http://localhost:8080/api/vehicles/").subscribe();
   }
 
 

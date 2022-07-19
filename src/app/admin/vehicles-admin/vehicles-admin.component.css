@@ -61,3 +61,8 @@ tr.mat-row:hover{
   background-color: rgb(255, 218, 148);
 }
 
+.btn-success{
+  float:right;
+  margin-bottom: 1%;
+}
+

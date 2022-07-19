@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="!add">
     <div class="row">
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-            
+
             <div class="col-md-3"></div>
             <div class="col-md-3 myColumn">
                 <label class="active" for="email">email Dipendente</label>
@@ -74,10 +74,10 @@
     </div>
 </div>
 
-<div class="container-fluid" *ngIf="showedTable">
-    <div class="row">
-        <div class="col-md-12 "> 
-            <button type="button" class="btn btn-success " (click)="addEmployee()">Aggiungi Dipendente</button> 
+<div class="container-fluid">
+    <div class="row" *ngIf="showedTable">
+        <div class="col-md-12 ">
+            <button type="button" class="btn btn-success " (click)="addEmployee()">Aggiungi Dipendente</button>
         </div>
     </div>
     <div class="row">
