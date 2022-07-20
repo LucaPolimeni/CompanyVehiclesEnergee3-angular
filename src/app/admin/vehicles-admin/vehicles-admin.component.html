@@ -100,11 +100,11 @@
             <div class="col-md-4 myColumn"></div>
             <div class="col-md-2 myColumn">
                 <label class="active" for="manufacturerName">Nome Produttore</label>
-                <input class= "form-control" type="text" ngModel name="manufacturerName" placeholder="ex. Opel" #manufacturerName="ngModel">
-                
+                <input class= "form-control" type="text" ngModel name="manufacturerName" required placeholder="ex. Opel" #manufacturerName="ngModel">
+
             </div>
             <div class="col-md-2 myColumn">
-                <button type="submit" class="btn btn-light">Aggiungi Produttore</button>
+                <button type="submit" class="btn btn-light" [disabled]="!f.valid">Aggiungi Produttore</button>
             </div>
             <div class="col-md-4 myColumn"></div>
         </form>
@@ -126,14 +126,14 @@
             </div>
             <div class="col-md-2 myColumn">
                 <label class="active" for="manufacturerName">Nome Modello</label>
-                <input class= "form-control" type="text" ngModel name="modelName" placeholder="ex. Astra" #modelName="ngModel"> 
+                <input class= "form-control" type="text" ngModel name="modelName" required placeholder="ex. Astra" #modelName="ngModel">
             </div>
             <div class="col-md-2 myColumn">
                 <label class="active" for="year">Anno</label>
-                <input class= "form-control" type="text" ngModel name="year" placeholder="ex. 2018"> 
+                <input class= "form-control" type="text" required ngModel name="year" placeholder="ex. 2018">
             </div>
             <div class="col-md-2 myColumn">
-                <button type="submit" class="btn btn-light">Aggiungi Modello</button>
+                <button type="submit" class="btn btn-light" [disabled]="!f.valid">Aggiungi Modello</button>
             </div>
             <div class="col-md-1 myColumn"></div>
         </form>
