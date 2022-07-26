@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../../shared/Employee";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-profile',
@@ -33,7 +34,7 @@ export class MyProfileComponent implements OnInit {
       return;
     }
 
-    this.http.get<Employee>("http://localhost:8080/api/employees/findById/" + this.id)
+    this.http.get<Employee>(`${environment.apiURL}employees/findById/` + this.id)
       .subscribe(responseData => {
         this.employee.id = this.id;
         this.employee.firstName = responseData.firstName;
@@ -53,7 +54,7 @@ export class MyProfileComponent implements OnInit {
       return;
     }
 
-    this.http.put("http://localhost:8080/api/employees/updatePhone/" + this.id,
+    this.http.put(`${environment.apiURL}employees/updatePhone/` + this.id,
       {phoneNumber}
       ).subscribe(responseData =>{
         console.log(responseData);

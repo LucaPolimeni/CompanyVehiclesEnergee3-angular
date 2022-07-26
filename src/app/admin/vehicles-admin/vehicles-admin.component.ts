@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {Vehicles} from "../../new-booking/new-booking.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {HttpClient} from "@angular/common/http";
+import { environment } from 'src/environments/environment';
+import { Vehicles } from 'src/app/shared/Vehicles';
 
 export interface VehicleModel {
   Targa: string,
@@ -74,17 +75,12 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
 
   onAddVehicle(form: NgForm){
     this.addedVehicle = true;
-    console.log("added", form.value);
     this.targa = (form.value.licensePlate).toUpperCase();
     this.produttore = form.value.manufacturer
     this.modello = form.value.model;
     this.alimentazione = form.value.fuel;
 
-    console.log("targa -> ", this.targa)
-    console.log("id modello -> ", this.modello)
-    console.log("alimentazione -> ", this.alimentazione)
-
-    this.http.post("http://localhost:8080/api/vehicles/newVehicle", 
+    this.http.post(`${environment.apiURL}vehicles/newVehicle`, 
       {
         "id": this.targa,
         "fuel": this.alimentazione,
@@ -100,7 +96,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
   }
 
   getVehicles(){
-    this.http.get<Vehicles>("http://localhost:8080/api/vehicles/findAll")
+    this.http.get<Vehicles>(`${environment.apiURL}vehicles/findAll`)
       .subscribe(responseData =>{
         for (const key in responseData){
           if(responseData.hasOwnProperty(key)){
@@ -128,7 +124,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
   }
 
   getModels(){
-    this.http.get("http://localhost:8080/api/vehicles/models")
+    this.http.get(`${environment.apiURL}vehicles/models`)
     .subscribe(responseData => {
       for (const key in responseData){
         if(responseData.hasOwnProperty(key)){
@@ -140,7 +136,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
   }
 
   getManufacturer(){
-    this.http.get("http://localhost:8080/api/vehicles/manufacturer")
+    this.http.get(`${environment.apiURL}vehicles/manufacturer`)
     .subscribe(responseData => {
       for (const key in responseData){
         if(responseData.hasOwnProperty(key)){
@@ -160,7 +156,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
       const manufacturerName = event.target.value;
       console.log(manufacturerName);
     
-      this.http.get("http://localhost:8080/api/vehicles/modelByManufacturer/" + manufacturerName)
+      this.http.get(`${environment.apiURL}vehicles/modelByManufacturer/` + manufacturerName)
       .subscribe(responseData => {
         for (const key in responseData){
           if(responseData.hasOwnProperty(key)){
@@ -174,7 +170,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
 
   addManufacturer(form: NgForm){
     const name = form.value.manufacturerName
-    this.http.post("http://localhost:8080/api/vehicles/newManufacturer", {"name": name})
+    this.http.post(`${environment.apiURL}vehicles/newManufacturer`, {"name": name})
     .subscribe(responseData => {
       console.log(responseData);
       this.manufacturerAdded = true;
@@ -198,7 +194,7 @@ export class VehiclesAdminComponent implements OnInit, OnDestroy {
     console.log("name model -> ", modelName)
     console.log("year -> ", year)
 
-       this.http.post("http://localhost:8080/api/vehicles/newModel", 
+       this.http.post(`${environment.apiURL}vehicles/newModel`, 
        {
         "name": modelName,
         "yearProd": year,

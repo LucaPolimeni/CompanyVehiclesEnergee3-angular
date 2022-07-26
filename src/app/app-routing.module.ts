@@ -6,9 +6,9 @@ import { VehiclesAdminComponent } from "./admin/vehicles-admin/vehicles-admin.co
 import { MyProfileComponent } from "./user/my-profile/my-profile.component";
 import { NewBookingComponent } from "./new-booking/new-booking.component";
 import {UserComponent} from "./user/user.component";
-import {PageNotFoundComponent} from "./PageNotFound/pageNotFound.component";
-import {AuthGuard} from "./auth/auth.guard";
-import {LoginPageComponent} from "./auth/login-page.component";
+import {PageNotFoundComponent} from "./pages/PageNotFound/pageNotFound.component";
+import {AuthGuard} from "./core/auth/auth.guard";
+import {LoginPageComponent} from "./core/auth/login-page.component";
 import { BookingsComponent } from "./bookings/bookings.component";
 
 const appRoutes: Routes = [

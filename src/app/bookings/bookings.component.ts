@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs';
-import { LoginService } from '../auth/login.service';
+import { environment } from 'src/environments/environment';
+import { LoginService } from '../core/auth/login.service';
 import { Bookings } from '../shared/Bookings';
 import { Employee } from '../shared/Employee';
 import { Utilizations } from '../shared/Utilizations';
@@ -15,8 +16,7 @@ import { Utilizations } from '../shared/Utilizations';
 })
 export class BookingsComponent implements OnInit {
   showUtilization = false;
-  bookingId;
-  employeeMail = "";
+  bookingId : number;
   displayedColumnsBookings: string[] = [
     'id',
     'vehicleId',
@@ -44,7 +44,6 @@ export class BookingsComponent implements OnInit {
   bookings: Bookings[] = [];
   dataSourceBookings: MatTableDataSource<Bookings>;
 
-  //utilizations: Utilizations[] = [];
   dataSourceUtilizations: MatTableDataSource<Utilizations>;
 
   constructor(private http: HttpClient, private loginService: LoginService) { }
@@ -68,24 +67,12 @@ export class BookingsComponent implements OnInit {
     console.log(form.value);
   }
 
-  //getEmailEmployeeById(employeeId){
-  //  console.log("getEmailByEmployeeId --> ", employeeId);
-  //  this.http.get<Employee>("http://localhost:8080/api/employees/findById/" + employeeId)
-  //    .subscribe(data => {
- //      console.log("SUBSCRIBE  -->  ", data["email"]);
-  //      this.employeeMail = data["email"]
-  //    });
-  //  console.log("FUNCTION  -->  ", this.employeeMail);
-  //}
-
   getAllBookings(){
-    this.http.get<Bookings>("http://localhost:8080/api/bookings/findAll")
+    this.http.get<Bookings>(`${environment.apiURL}bookings/findAll`)
       .pipe(
         map(responseData => {
           for (const key in responseData){
             if(responseData.hasOwnProperty(key)){
-              //this.getEmailEmployeeById(responseData[key]["employeeId"]);
-              //responseData[key]["employeeId"] = this.employeeMail;
 
               const myStartDate = responseData[key]["startDate"];
               responseData[key]["startDate"] = myStartDate.substr(0, myStartDate.indexOf("T")) + "  - ore " + myStartDate.substr(myStartDate.indexOf("T")+1, 5)
@@ -113,7 +100,7 @@ export class BookingsComponent implements OnInit {
       return;
     }
 
-    this.http.get<Bookings>("http://localhost:8080/api/bookings/findByEmployeeId/" + id)
+    this.http.get<Bookings>(`${environment.apiURL}bookings/findByEmployeeId/` + id)
       .pipe(
         map(responseData => {
           for (const key in responseData){
@@ -136,7 +123,7 @@ export class BookingsComponent implements OnInit {
 
   getUtilization(id){
     const utilizations = [];
-    this.http.get<Utilizations>("http://localhost:8080//api/bookings/utilizationsByBookingId/" + id)
+    this.http.get<Utilizations>(`${environment.apiURL}bookings/utilizationsByBookingId/` + id)
     .pipe(
       map(responseData => {
         for (const key in responseData){
@@ -151,7 +138,6 @@ export class BookingsComponent implements OnInit {
           }
         }
         this.dataSourceUtilizations = new MatTableDataSource(utilizations);
-        //console.log(responseData);
       })
     ).subscribe()
 
@@ -166,7 +152,7 @@ export class BookingsComponent implements OnInit {
     const km = form.value.km
     const note = form.value.note
     console.log("startDate -> ", startDate, " endDate -> ", endDate, " km -> ", km,  " note -> ", note)
-    this.http.post<Utilizations>("http://localhost:8080/api/bookings/insertKmNote", 
+    this.http.post<Utilizations>(`${environment.apiURL}bookings/insertKmNote`, 
     {
       "bookingId": {
           "id": this.bookingId

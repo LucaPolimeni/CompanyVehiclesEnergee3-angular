@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {LoginService} from "../auth/login.service";
+import {LoginService} from "../core/auth/login.service";
 
 @Component({
   selector: 'nav-bar-root',

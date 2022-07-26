@@ -1,8 +1,9 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Employee} from "../shared/Employee";
+import {Employee} from "../../shared/Employee";
 import {catchError, tap } from "rxjs/operators";
 import {throwError} from "rxjs";
+import { environment } from "src/environments/environment";
 
 @Injectable({providedIn: "root"})
 export class LoginService implements OnInit{
@@ -16,7 +17,7 @@ export class LoginService implements OnInit{
   }
 
   login(email: string, check: boolean){
-    return this.http.get<Employee>('http://localhost:8080/api/employees/findByEmail/' + email)
+    return this.http.get<Employee>(`${environment.apiURL}employees/findByEmail/` + email)
       .pipe(
        catchError(this.handleError),
         tap(responseData => {

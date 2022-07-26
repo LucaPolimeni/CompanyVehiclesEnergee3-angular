@@ -6,6 +6,7 @@ import { MatColumnDef, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { map, Observable } from 'rxjs';
 import { Employee } from '../../shared/Employee';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-employees-admin',
@@ -35,17 +36,15 @@ export class EmployeesAdminComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.getEmployees(); //per mandare la richiesta get quando clicco il bottone nell'header
+    this.getEmployees();
+  }
+
+  onSubmit(form: NgForm){
   }
 
   addEmployee(){
     this.add = !this.add;
     this.showedTable = !this.add;
-  }
-
-  onSubmit(form: NgForm){
-    console.log(form.value);
-    //this.dataSource.filter = form.value.email.trim().toLowerCase();
   }
 
   onAddedEmployee(form: NgForm){
@@ -73,7 +72,7 @@ export class EmployeesAdminComponent implements OnInit {
 
   getEmployees(){
     if (!this.dataLoaded){
-      this.http.get("http://localhost:8080/api/employees/findAll")
+      this.http.get(`${environment.apiURL}employees/findAll`)
       .pipe(
         map(responseData => {
 
@@ -89,13 +88,13 @@ export class EmployeesAdminComponent implements OnInit {
       .subscribe(posts => {
       })
     }
-    this.dataLoaded = true; //per evitare che ogni volta che clicco "cerca" vengano ricaricati i dati in nuove righe della tabella
+    this.dataLoaded = true;
     this.showedTable = true;
   }
 
   newEmployee(firstName, lastName, sex, phoneNumber, email, taxCode, active){
     this.http.post<Employee>(
-      "http://localhost:8080/api/employees/newEmployee",{
+      `${environment.apiURL}employees/newEmployee`,{
         firstName ,
         lastName,
         sex,

@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {LoginService} from "../auth/login.service";
+import {LoginService} from "../core/auth/login.service";
 import {Employee} from "../shared/Employee";
+import { environment } from 'src/environments/environment';
+import { Vehicles } from '../shared/Vehicles';
 
-export interface Vehicles {
-  id: string,
-  fuel: string,
-  modelId: {
-    name: string,
-    yearProd: number,
-    manufacturerId: {
-      name: string
-    }
-  }
-}
 
 @Component({
   selector: 'app-new-booking',
@@ -26,8 +17,8 @@ export class NewBookingComponent implements OnInit {
   booked = false;
   error = null;
   id: number;
-  startDate: any;
-  endDate: any;
+  startDate: string;
+  endDate: string;
   position: number = null;
   date: string;
   vehiclesArray: Vehicles[] = [];
@@ -72,7 +63,7 @@ export class NewBookingComponent implements OnInit {
   }
 
   getAvailable(startDate, endDate){
-    this.http.get<Vehicles>("http://localhost:8080/api/bookings/available/" + startDate + "&" + endDate)
+    this.http.get<Vehicles>(`${environment.apiURL}bookings/available/` + startDate + "&" + endDate)
       .subscribe(responseData =>{
         for (const key in responseData){
           if(responseData.hasOwnProperty(key)){
@@ -95,7 +86,7 @@ export class NewBookingComponent implements OnInit {
   }
 
   insertBooking(id: number, license_plate: string, startDate: any, endDate: any){
-    this.http.post("http://localhost:8080/api/bookings/newBooking", {
+    this.http.post(`${environment.apiURL}bookings/newBooking`, {
       "employeeId": {
         "id": id
       },
@@ -116,7 +107,7 @@ export class NewBookingComponent implements OnInit {
   }
 
   getEmployeeId(email: string){
-    this.http.get<Employee>('http://localhost:8080/api/employees/findByEmail/' + email)
+    this.http.get<Employee>(`${environment.apiURL}employees/findByEmail/` + email)
       .subscribe(resData => {
         this.id = resData.id;
       }, error => {
